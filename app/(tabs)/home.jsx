@@ -44,8 +44,31 @@ export default function Home() {
           </View>
         </ImageBackground>
       </ScrollView>
-      {
-      restaurants.length === 0 ?(
+      {restaurants.length === 0 ?(
+         <ActivityIndicator animating color="#fb9b33" />
+      ):(
+      <FlatList data={restaurants} 
+      renderItem={renderItems}
+       horizontal 
+       contentContainerStyle={{ padding: 16 }} 
+       showsHorizontalScrollIndicator={false}
+        scrollEnabled={true}  />
+
+      )
+    }
+    {restaurants.length === 0 ?(
+         <ActivityIndicator animating color="#fb9b33" />
+      ):(
+      <FlatList data={restaurants} 
+      renderItem={renderItems}
+       horizontal 
+       contentContainerStyle={{ padding: 16 }} 
+       showsHorizontalScrollIndicator={false}
+        scrollEnabled={true}  />
+
+      )
+    }
+    {restaurants.length === 0 ?(
          <ActivityIndicator animating color="#fb9b33" />
       ):(
       <FlatList data={restaurants} 
