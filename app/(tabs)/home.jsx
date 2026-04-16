@@ -19,13 +19,14 @@ export default function Home() {
         </View>
        </View>
        </View>
-       <ScrollView>
+       <ScrollView contentContainerStyle={{ flexGrow: 1 }}>
         <ImageBackground
         source={banner}
-        className="w-full h-40 justify-center"
+        className="w-full h-64 justify-center"
         imageStyle={{ borderRadius: 16 }}
+        resizeMode="cover"
       >
-        <View className="bg-black/50 p-4 rounded-2xl">
+        <View className="bg-black/50 p-4 rounded-2xl mx-4">
           <Text className="text-center text-3xl font-bold text-white">
             Dine with your loved ones
           </Text>
