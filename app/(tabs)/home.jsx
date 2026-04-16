@@ -1,16 +1,16 @@
-import { View, Text, Image, Platform, ImageBackground, ScrollView, TouchableOpacity } from 'react-native'
+import { View, Text, Image, Platform, ImageBackground, ScrollView,FlatList, TouchableOpacity, ActivityIndicator } from 'react-native'
 import React from 'react'
 import banner from "../../assets/images/homeBanner.png";
 import { SafeAreaView } from 'react-native-safe-area-context'
 import logo from "../../assets/images/dinetimelogo.png";
-import { FlatList } from 'react-native-web';
 import restaurants from '../../store/restaurants';
 
 export default function Home() {
   const renderItems = ({ item }) => (
+
     <TouchableOpacity>
       <Image
-      resizeMode='cover'
+      resizeMode="cover"
       source={{uri: item.image}}
       className="h-28 mt-2 mb-1 rounded-lg"
       />
@@ -45,23 +45,18 @@ export default function Home() {
         </ImageBackground>
       </ScrollView>
       {
-        restaurants.length > 0 ?
-        <FlatList
-          data={restaurants}
-          renderItem={renderItems}
-          horizontal
-          contentContainerStyle={{ padding: 16 }}
-          showsHorizontalScrollIndicator={false}
-          scrollEnabled={true}
-        />
-: null
-      }
+      restaurants.length === 0 ?(
+         <ActivityIndicator animating color="#fb9b33" />
+      ):(
+      <FlatList data={restaurants} 
+      renderItem={renderItems}
+       horizontal 
+       contentContainerStyle={{ padding: 16 }} 
+       showsHorizontalScrollIndicator={false}
+        scrollEnabled={true}  />
 
-
-
-
-
-      }
+      )
+    }
     </SafeAreaView>
   );
 }
