@@ -307,4 +307,4 @@ const slots = [
   },
 ];
 
-export default restaurants;
+export { restaurants, carouselImages, slots };
