@@ -11,12 +11,14 @@ import { collection, query, getDocs } from 'firebase/firestore';
 
 
 export default function Home() {
-
+  const router = useRouter();
   const [restaurants, setRestaurants] = useState([]);
 
   const renderItems = ({ item }) => (
 
-    <TouchableOpacity className = "bg-[#5f5f5f] max-w-xs max-h-64 justify-center rounded-lg  p-4 mx-4">
+    <TouchableOpacity
+    onPress={()=>router.push(`/restaurant/${item.name}`)} 
+    className = "bg-[#5f5f5f] max-w-xs max-h-64 justify-center rounded-lg  p-4 mx-4">
       <View className="items-center">
       <Image
       resizeMode="cover"
