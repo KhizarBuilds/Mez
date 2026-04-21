@@ -1,13 +1,12 @@
 import * as Yup from "yup";
+const validationSchema = Yup.object().shape({
+  email: Yup.string()
+    .required("Email is required")
+    .email("Invalid email format"),
 
-const ValidationSchema = Yup.object().shape({
-
-    email: Yup.string()
-    .email("Invalid email")
-    .required("Email is required"),
-    password: Yup.string()
-    .min(6, "Password must be at least 6 characters")
-    .required("Password is required"),
+  password: Yup.string()
+    .required("Password is required")
+    .min(6, "Password must be at least 6 characters long"),
 });
 
-export default ValidationSchema;
+export default validationSchema;

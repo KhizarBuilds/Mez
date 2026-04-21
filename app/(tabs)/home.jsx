@@ -7,6 +7,7 @@ import React, { use, useEffect, useState } from "react";
 import { db } from "../../config/firebaseConfig";
 import { restaurants } from '../../store/restaurants';
 import { collection, query, getDocs } from 'firebase/firestore';
+import uploadData from '../../config/bulkupload';
 
 export default function Home() {
   const router = useRouter();
