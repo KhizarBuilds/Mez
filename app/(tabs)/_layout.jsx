@@ -6,10 +6,12 @@ import {Ionicons} from '@expo/vector-icons';
 
 const TabLayout = () => {
   return (
-  <Tabs screenOptions={{ headerShown: false , tabBarActivateTintColor:Colors.PRIMARY, 
+  <Tabs screenOptions={{ headerShown: false , tabBarActiveTintColor:Colors.PRIMARY, 
     tabBarInactiveTintColor:Colors.dark.text,
     tabBarStyle:{
         backgroundColor: Colors.SECONDARY,
+        borderTopColor: "#F1D3D3",
+        borderTopWidth: 1,
         paddingBottom:14,
         height: 75,
     },

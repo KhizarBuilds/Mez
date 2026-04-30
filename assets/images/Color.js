@@ -1,22 +1,24 @@
-const tintColorLight = "#0a7ea4";
-const tintColorDark = "#fff";
-const primary = "#f49b33";
-const secondary = "#2b2b2b";
+import { AppTheme } from "../../theme/colors";
+
+const tintColorLight = AppTheme.colors.accent;
+const tintColorDark = AppTheme.colors.accentContrast;
+const primary = AppTheme.colors.accent;
+const secondary = AppTheme.colors.surface;
 export const Colors = {
   light: {
-    text: "#11181C",
-    background: "#fff",
+    text: AppTheme.colors.textPrimary,
+    background: AppTheme.colors.background,
     tint: tintColorLight,
-    icon: "#687076",
-    tabIconDefault: "#687076",
+    icon: AppTheme.colors.textSecondary,
+    tabIconDefault: AppTheme.colors.textSecondary,
     tabIconSelected: tintColorLight,
   },
   dark: {
-    text: "#ecedee",
-    background: "#151718",
+    text: AppTheme.colors.accentContrast,
+    background: AppTheme.colors.accent,
     tint: tintColorDark,
-    icon: "#9BA1A6",
-    tabIconDefault: "#9ba1a6",
+    icon: AppTheme.colors.accentMuted,
+    tabIconDefault: AppTheme.colors.accentMuted,
     tabIconSelected: tintColorDark,
   },
   PRIMARY: primary,

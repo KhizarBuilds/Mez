@@ -9,17 +9,17 @@ const GuestPickerComponent = ({ selectedNumber, setSelectedNumber }) => {
     if (selectedNumber < 12) setSelectedNumber(selectedNumber + 1);
   };
   return (
-    <View className="flex flex-row items-center rounded-lg text-white text-base">
+    <View className="flex flex-row items-center rounded-xl text-base overflow-hidden border border-[#F1D3D3]">
       <TouchableOpacity onPress={decrement} className="rounded">
-        <Text className="text-white text-lg border border-[#f49b33] rounded-l-lg px-3">
+        <Text className="text-[#9E0708] text-lg bg-[#FDF3F3] px-3 py-1 font-bold">
           -
         </Text>
       </TouchableOpacity>
-      <Text className="px-3 text-white bg-[#474747] border border-[#474747] text-lg">
+      <Text className="px-3 text-[#9E0708] bg-white text-lg font-semibold">
         {selectedNumber}
       </Text>
       <TouchableOpacity onPress={increment} className="rounded">
-        <Text className="text-white text-lg border border-[#f49b33] rounded-r-lg px-3">
+        <Text className="text-[#9E0708] text-lg bg-[#FDF3F3] px-3 py-1 font-bold">
           +
         </Text>
       </TouchableOpacity>

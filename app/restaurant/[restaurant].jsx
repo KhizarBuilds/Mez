@@ -17,6 +17,8 @@ import Ionicons from "@expo/vector-icons/Ionicons";
 import DatePickerComponent from "../../components/restaurant/DatePickerComponent";
 import GuestPickerComponent from "../../components/restaurant/GuestPickerComponent";
 import FindSlots from "../../components/restaurant/FindSlots";
+import { AppTheme } from "../../theme/colors";
+import SurfaceCard from "../../components/ui/SurfaceCard";
 
 export default function Restaurant() {
   const { restaurant } = useLocalSearchParams();
@@ -40,7 +42,7 @@ export default function Restaurant() {
       flatListRef.current.scrollToIndex({ index: nextIndex, animated: true });
     }
 
-    if (currentIndex == carouselLength - 1) {
+    if (currentIndex === carouselLength - 1) {
       const nextIndex = 0;
       setCurrentIndex(nextIndex);
       flatListRef.current.scrollToIndex({ index: nextIndex, animated: true });
@@ -54,7 +56,7 @@ export default function Restaurant() {
       flatListRef.current.scrollToIndex({ index: prevIndex, animated: true });
     }
 
-    if (currentIndex == 0) {
+    if (currentIndex === 0) {
       const prevIndex = carouselLength - 1;
       setCurrentIndex(prevIndex);
       flatListRef.current.scrollToIndex({ index: prevIndex, animated: true });
@@ -117,7 +119,7 @@ export default function Restaurant() {
             <View
               key={i}
               className={`bg-white h-2 w-2 ${
-                i == currentIndex && "h-3 w-3"
+                i === currentIndex && "h-3 w-3"
               } p-1 mx-1 rounded-full`}
             />
           ))}
@@ -204,19 +206,20 @@ export default function Restaurant() {
   return (
     <SafeAreaView
       style={[
-        { backgroundColor: "#2b2b2b" },
-        Platform.OS == "android" && { paddingBottom: 55 },
-        Platform.OS == "ios" && { paddingBottom: 20 },
+        { backgroundColor: AppTheme.colors.background, flex: 1 },
+        Platform.OS === "android" && { paddingBottom: 55 },
+        Platform.OS === "ios" && { paddingBottom: 20 },
       ]}
     >
-      <ScrollView className="h-full">
-        <View className="flex-1 my-2 p-2">
-          <Text className="text-xl text-[#f49b33] mr-2 font-semibold">
+      <ScrollView className="h-full" contentContainerStyle={{ paddingBottom: 24 }}>
+        <SurfaceCard className="flex-1 mt-2 mb-1 mx-3 p-3">
+          <Text className="text-2xl text-[#9E0708] mr-2 font-bold">
             {restaurant}
           </Text>
-          <View className="border-b border-[#f49b33]" />
-        </View>
-        <View className="h-64 max-w-[98%] mx-2 rounded-[25px]">
+          <View className="border-b border-[#F1D3D3] mt-2" />
+        </SurfaceCard>
+
+        <View className="h-64 max-w-[98%] mx-2 rounded-[25px] mt-2">
           <FlatList
             ref={flatListRef}
             data={carouselData[0]?.images}
@@ -227,38 +230,44 @@ export default function Restaurant() {
             style={{ borderRadius: 25 }}
           />
         </View>
-        <View className="flex-1 flex-row mt-2 p-2">
-          <Ionicons name="location-sharp" size={24} color="#f49b33" />
-          <Text className="max-w-[75%] text-white">
-            {restaurantData?.address} |{"  "}
-            <Text
-              onPress={handleLocation}
-              className="underline flex items-center mt-1 text-[#f49b33] italic font-semibold"
-            >
-              Get Direction
+
+        <SurfaceCard className="mx-3 mt-3 p-3">
+          <View className="flex-row">
+            <Ionicons name="location-sharp" size={22} color="#9E0708" />
+            <Text className="max-w-[85%] text-[#2A2A2A] ml-2">
+              {restaurantData?.address}{" "}
+              <Text
+                onPress={handleLocation}
+                className="underline text-[#9E0708] italic font-semibold"
+              >
+                | Get Direction
+              </Text>
             </Text>
-          </Text>
-        </View>
-        <View className="flex-1 flex-row p-2">
-          <Ionicons name="time" size={20} color="#f49b33" />
-          <Text className="max-w-[75%] mx-2 font-semibold text-white">
-            {restaurantData?.opening} - {restaurantData?.closing}
-          </Text>
-        </View>
-        <View className="flex-1 border m-2 p-2 border-[#f49b33] rounded-lg">
-          <View className="flex-1 flex-row m-2 p-2 justify-end items-center">
+          </View>
+
+          <View className="flex-row pt-3">
+            <Ionicons name="time" size={20} color="#9E0708" />
+            <Text className="max-w-[75%] mx-2 font-semibold text-[#2A2A2A]">
+              {restaurantData?.opening} - {restaurantData?.closing}
+            </Text>
+          </View>
+        </SurfaceCard>
+
+        <SurfaceCard className="flex-1 mx-3 mt-3 p-2">
+          <View className="flex-1 flex-row m-2 p-2 bg-[#FDF3F3] rounded-xl justify-end items-center">
             <View className="flex-1 flex-row">
-              <Ionicons name="calendar" size={20} color="#f49b33" />
-              <Text className="text-white mx-2 text-base">
+              <Ionicons name="calendar" size={20} color="#9E0708" />
+              <Text className="text-[#2A2A2A] mx-2 text-base">
                 Select booking date
               </Text>
             </View>
             <DatePickerComponent date={date} setDate={setDate} />
           </View>
-          <View className="flex-1 flex-row bg-[#474747] rounded-lg  m-2 p-2 justify-end items-center">
+
+          <View className="flex-1 flex-row bg-[#FDF3F3] rounded-xl m-2 p-2 justify-end items-center">
             <View className="flex-1 flex-row">
-              <Ionicons name="people" size={20} color="#f49b33" />
-              <Text className="text-white mx-2 text-base">
+              <Ionicons name="people" size={20} color="#9E0708" />
+              <Text className="text-[#2A2A2A] mx-2 text-base">
                 Select number of guests
               </Text>
             </View>
@@ -267,7 +276,7 @@ export default function Restaurant() {
               setSelectedNumber={setSelectedNumber}
             />
           </View>
-        </View>
+        </SurfaceCard>
         <View className="flex-1">
           <FindSlots
             restaurant={restaurant}

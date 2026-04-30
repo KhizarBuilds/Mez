@@ -1,6 +1,8 @@
 import { View, Text, TouchableOpacity, Platform } from "react-native";
 import React, { useState } from "react";
 import DateTimePicker from "@react-native-community/datetimepicker";
+import { AppTheme } from "../../theme/colors";
+
 const DatePickerComponent = ({ date, setDate }) => {
   const [show, setShow] = useState(false);
 
@@ -16,19 +18,19 @@ const DatePickerComponent = ({ date, setDate }) => {
     <View className="flex flex-row">
       <TouchableOpacity
         onPress={handlePress}
-        className={` rounded-lg text-white text-base ${
-          Platform.OS === "android" && "px-2 py-1 justify-center bg-[#474747]"
+        className={`rounded-xl text-base ${
+          Platform.OS === "android" && "px-2 py-1 justify-center bg-[#FDF3F3]"
         } `}
       >
         {Platform.OS === "android" && (
-          <Text className="px-2 py-1 bg-[#474747] text-white">
+          <Text className="px-2 py-1 bg-[#FDF3F3] text-[#9E0708] font-semibold rounded-lg">
             {date.toLocaleDateString()}
           </Text>
         )}
         {Platform.OS === "android" && show && (
           <DateTimePicker
-            accentColor="#f49b33"
-            textColor="#f49b33"
+            accentColor={AppTheme.colors.accent}
+            textColor={AppTheme.colors.accent}
             value={date}
             mode="date"
             onChange={onChange}
@@ -39,8 +41,8 @@ const DatePickerComponent = ({ date, setDate }) => {
         )}
         {Platform.OS == "ios" && (
           <DateTimePicker
-            accentColor="#f49b33"
-            textColor="#f49b33"
+            accentColor={AppTheme.colors.accent}
+            textColor={AppTheme.colors.accent}
             value={date}
             mode="date"
             onChange={onChange}

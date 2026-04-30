@@ -5,7 +5,6 @@ import {
   TouchableOpacity,
   Image,
   StatusBar,
-  TextInput,
   Alert,
 } from "react-native";
 import { useRouter } from "expo-router";
@@ -19,6 +18,10 @@ import { signInWithEmailAndPassword } from "firebase/auth";
 import { doc, getDoc, getFirestore } from "firebase/firestore";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { auth } from "../../config/firebaseConfig";
+import { AppTheme } from "../../theme/colors";
+import ThemedInput from "../../components/ui/ThemedInput";
+import PrimaryButton from "../../components/ui/PrimaryButton";
+import SurfaceCard from "../../components/ui/SurfaceCard";
 const Signup = () => {
   const router = useRouter();
   const db = getFirestore();
@@ -63,15 +66,15 @@ const Signup = () => {
     }
   };
   return (
-    <SafeAreaView className={`bg-[#2b2b2b]`}>
+    <SafeAreaView className={`bg-[#F8EDED]`}>
       <ScrollView contentContainerStyle={{ height: "100%" }}>
         <View className="m-2 flex justify-center items-center">
           <Image source={logo} style={{ width: 200, height: 100 }} />
-          <Text className="text-lg text-center text-white  font-bold mb-10">
+          <Text className="text-lg text-center text-[#2A2A2A] font-bold mb-6">
             Let's get you started
           </Text>
 
-          <View className="w-5/6">
+          <SurfaceCard className="w-5/6 p-4">
             <Formik
               initialValues={{ email: "", password: "" }}
               validationSchema={validationSchema}
@@ -86,9 +89,8 @@ const Signup = () => {
                 touched,
               }) => (
                 <View className="w-full">
-                  <Text className="text-[#f49b33] mt-4 mb-2">Email</Text>
-                  <TextInput
-                    className="h-10 border border-white text-white rounded px-2"
+                  <Text className="text-[#9E0708] mt-2 mb-2 font-semibold">Email</Text>
+                  <ThemedInput
                     keyboardType="email-address"
                     onChangeText={handleChange("email")}
                     value={values.email}
@@ -100,9 +102,8 @@ const Signup = () => {
                       {errors.email}
                     </Text>
                   )}
-                  <Text className="text-[#f49b33] mt-4 mb-2">Password</Text>
-                  <TextInput
-                    className="h-10 border border-white text-white rounded px-2"
+                  <Text className="text-[#9E0708] mt-4 mb-2 font-semibold">Password</Text>
+                  <ThemedInput
                     secureTextEntry
                     onChangeText={handleChange("password")}
                     value={values.password}
@@ -115,14 +116,7 @@ const Signup = () => {
                     </Text>
                   )}
 
-                  <TouchableOpacity
-                    onPress={handleSubmit}
-                    className="p-2 my-2 bg-[#f49b33]  text-black rounded-lg mt-10"
-                  >
-                    <Text className="text-lg font-semibold text-center">
-                      Sign In
-                    </Text>
-                  </TouchableOpacity>
+                  <PrimaryButton title="Sign In" onPress={handleSubmit} className="mt-8" />
                 </View>
               )}
             </Formik>
@@ -131,29 +125,29 @@ const Signup = () => {
                 className="flex flex-row justify-center mt-5 p-2 items-center"
                 onPress={() => router.push("/signup")}
               >
-                <Text className="text-white font-semibold">New User? </Text>
-                <Text className="text-base font-semibold underline text-[#f49b33]">
+                <Text className="text-[#2A2A2A] font-semibold">New User? </Text>
+                <Text className="text-base font-semibold underline text-[#9E0708]">
                   Sign up
                 </Text>
               </TouchableOpacity>
 
-              <Text className="text-center text-base  font-semibold mb-4 text-white">
-                <View className="border-b-2 border-[#f49b33] p-2 mb-1 w-24" />{" "}
+              <Text className="text-center text-base font-semibold mb-4 text-[#6C6C6C]">
+                <View className="border-b-2 border-[#B14241] p-2 mb-1 w-24" />{" "}
                 or{" "}
-                <View className="border-b-2 border-[#f49b33] p-2 mb-1 w-24" />
+                <View className="border-b-2 border-[#B14241] p-2 mb-1 w-24" />
               </Text>
               <TouchableOpacity
                 className="flex flex-row justify-center mb-5 p-2 items-center"
                 onPress={handleGuest}
               >
-                <Text className="text-white font-semibold">Be a</Text>
-                <Text className="text-base font-semibold underline text-[#f49b33]">
+                <Text className="text-[#2A2A2A] font-semibold">Be a</Text>
+                <Text className="text-base font-semibold underline text-[#9E0708]">
                   {" "}
                   Guest User
                 </Text>
               </TouchableOpacity>
             </View>
-          </View>
+          </SurfaceCard>
         </View>
         <View className="flex-1">
           <Image
@@ -162,7 +156,7 @@ const Signup = () => {
             resizeMode="contain"
           />
         </View>
-        <StatusBar barStyle={"light-content"} backgroundColor={"#2b2b2b"} />
+        <StatusBar barStyle={"dark-content"} backgroundColor={AppTheme.colors.background} />
       </ScrollView>
     </SafeAreaView>
   );

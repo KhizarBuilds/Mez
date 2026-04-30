@@ -1,11 +1,15 @@
-import { View, Text, TouchableOpacity, Modal, TextInput } from "react-native";
-import React, { useState } from "react";
+import Ionicons from "@expo/vector-icons/Ionicons";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { addDoc, collection } from "firebase/firestore";
-import { db } from "../../config/firebaseConfig";
 import { Formik } from "formik";
-import Ionicons from "@expo/vector-icons/Ionicons";
+import { useState } from "react";
+import { Modal, Text, TouchableOpacity, View } from "react-native";
+import { db } from "../../config/firebaseConfig";
 import validationSchema from "../../utils/guestFormSchema";
+import ThemedInput from "../ui/ThemedInput";
+import PrimaryButton from "../ui/PrimaryButton";
+import SurfaceCard from "../ui/SurfaceCard";
+
 const FindSlots = ({
   date,
   selectedNumber,
@@ -20,15 +24,14 @@ const FindSlots = ({
   const normalizedSlots = Array.isArray(slots)
     ? slots
     : Array.isArray(restaurant?.slot)
-    ? restaurant.slot
-    : [];
+      ? restaurant.slot
+      : [];
   const handlePress = () => {
     setSlotsVisible(!slotsVisible);
   };
 
   const handleBooking = async () => {
     const userEmail = await AsyncStorage.getItem("userEmail");
-    const guestStatus = await AsyncStorage.getItem("isGuest");
     if (userEmail) {
       try {
         await addDoc(collection(db, "bookings"), {
@@ -43,7 +46,7 @@ const FindSlots = ({
       } catch (error) {
         console.log(error);
       }
-    } else if (guestStatus === "true") {
+    } else {
       setFormVisible(true);
       setModalVisible(true);
     }
@@ -53,7 +56,7 @@ const FindSlots = ({
   };
   const handleSlotPress = (slot) => {
     let prevSlot = selectedSlot;
-    if (prevSlot == slot) {
+    if (prevSlot === slot) {
       setSelectedSlot(null);
     } else {
       setSelectedSlot(slot);
@@ -80,7 +83,7 @@ const FindSlots = ({
       <View className={`flex ${selectedSlot != null && "flex-row"} `}>
         <View className={`${selectedSlot != null && "flex-1"}`}>
           <TouchableOpacity onPress={handlePress}>
-            <Text className="text-center text-lg font-semibold bg-[#f49b33] p-2 my-3 mx-2 rounded-lg">
+            <Text className="text-center text-lg font-semibold text-white bg-[#9E0708] p-3 my-3 mx-2 rounded-xl">
               Find Slots
             </Text>
           </TouchableOpacity>
@@ -88,7 +91,7 @@ const FindSlots = ({
         {selectedSlot != null && (
           <View className="flex-1">
             <TouchableOpacity onPress={handleBooking}>
-              <Text className="text-center text-white text-lg font-semibold bg-[#f49b33] p-2 my-3 mx-2 rounded-lg">
+              <Text className="text-center text-white text-lg font-semibold bg-[#AA2D2B] p-3 my-3 mx-2 rounded-xl">
                 Book Slot
               </Text>
             </TouchableOpacity>
@@ -96,22 +99,31 @@ const FindSlots = ({
         )}
       </View>
       {slotsVisible && (
-        <View className="flex-wrap flex-row mx-2 p-2 bg-[#474747] rounded-lg">
+        <SurfaceCard className="flex-wrap flex-row mx-2 p-2">
           {normalizedSlots.map((slot, index) => (
             <TouchableOpacity
               key={index}
-              className={` m-2 p-4 bg-[#f49b33] rounded-lg items-center justify-center ${
+              className={`m-2 p-4 rounded-xl items-center justify-center ${
                 selectedSlot && selectedSlot !== slot ? "opacity-50" : ""
               }`}
+              style={{
+                backgroundColor: selectedSlot === slot ? "#9E0708" : "#FDF3F3",
+              }}
               onPress={() => handleSlotPress(slot)}
               disabled={
-                selectedSlot == slot || selectedSlot == null ? false : true
+                selectedSlot === slot || selectedSlot === null ? false : true
               }
             >
-              <Text className="text-white font-bold">{slot}</Text>
+              <Text
+                className={`font-bold ${
+                  selectedSlot === slot ? "text-white" : "text-[#9E0708]"
+                }`}
+              >
+                {slot}
+              </Text>
             </TouchableOpacity>
           ))}
-        </View>
+        </SurfaceCard>
       )}
       <Modal
         visible={modalVisible}
@@ -126,7 +138,7 @@ const FindSlots = ({
         }}
       >
         <View className="flex-1 bg-[#00000080] justify-end">
-          <View className="bg-[#474747] mx-4 rounded-t-lg p-4 pb-6">
+          <View className="bg-white mx-4 rounded-t-2xl p-4 pb-6 border border-[#F1D3D3]">
             {formVisible && (
               <Formik
                 initialValues={{ fullName: "", phoneNumber: "" }}
@@ -146,13 +158,12 @@ const FindSlots = ({
                       <Ionicons
                         name="close-sharp"
                         size={30}
-                        color={"#f49b33"}
+                        color={"#9E0708"}
                         onPress={handleCloseModal}
                       />
                     </View>
-                    <Text className="text-[#f49b33] mt-4 mb-2">Name</Text>
-                    <TextInput
-                      className="h-10 border border-white text-white rounded px-2"
+                    <Text className="text-[#9E0708] mt-4 mb-2 font-semibold">Name</Text>
+                    <ThemedInput
                       onChangeText={handleChange("fullName")}
                       value={values.fullName}
                       onBlur={handleBlur("fullName")}
@@ -163,11 +174,10 @@ const FindSlots = ({
                         {errors.fullName}
                       </Text>
                     )}
-                    <Text className="text-[#f49b33] mt-4 mb-2">
+                    <Text className="text-[#9E0708] mt-4 mb-2 font-semibold">
                       Phone Number
                     </Text>
-                    <TextInput
-                      className="h-10 border border-white text-white rounded px-2"
+                    <ThemedInput
                       onChangeText={handleChange("phoneNumber")}
                       value={values.phoneNumber}
                       onBlur={handleBlur("phoneNumber")}
@@ -179,14 +189,7 @@ const FindSlots = ({
                       </Text>
                     )}
 
-                    <TouchableOpacity
-                      onPress={handleSubmit}
-                      className="p-2 my-2 bg-[#f49b33]  text-black rounded-lg mt-10"
-                    >
-                      <Text className="text-lg font-semibold text-center">
-                        Submit
-                      </Text>
-                    </TouchableOpacity>
+                    <PrimaryButton title="Submit" onPress={handleSubmit} className="mt-10" />
                   </View>
                 )}
               </Formik>
